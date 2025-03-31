@@ -1,0 +1,12 @@
+services:
+  app:
+    image: chat-backend-app:latest
+    build:
+      context: . 
+      dockerfile: Dockerfile  
+    ports:
+      - "${PORT}:${PORT}" 
+    environment:
+      - PORT=${PORT}  
+    env_file:
+      - .env  
