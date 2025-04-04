@@ -1,8 +1,9 @@
-// import express from 'express';
-// import { CheckAuth } from '../controllers/AuthController';
+import { Router } from 'express';
 
-// const AuthRoutes = express.Router();
+const authRoutes = Router();
 
-// AuthRoutes.post('/check-auth', CheckAuth)
+authRoutes.get('/', (req, res, next) => {
+  res.json('hello');
+});
 
-// export default AuthRoutes;
+export default authRoutes;

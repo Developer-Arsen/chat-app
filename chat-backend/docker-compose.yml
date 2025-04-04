@@ -1,12 +1,36 @@
 services:
   app:
-    image: chat-backend-app:latest
-    build:
-      context: . 
-      dockerfile: Dockerfile  
+    build : .
     ports:
       - "${PORT}:${PORT}" 
     environment:
-      - PORT=${PORT}  
-    env_file:
-      - .env  
+      - PORT=${PORT}
+      - MONGO_URI=mongodb://mongo:27017/${DB_NAME}
+      - DB_NAME=${DB_NAME}
+      - REDIS_URI=redis://redis:6379
+    depends_on:
+      - mongo
+      - redis
+    networks:
+      - mynetwork
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    networks:
+      - mynetwork
+    volumes:
+      - mongo-data:/data/db
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
+volumes:
+  mongo-data:
